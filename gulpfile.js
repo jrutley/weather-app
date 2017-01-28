@@ -1,29 +1,32 @@
-var gulp = require('gulp'),
-  connect = require('gulp-connect'),
-  sass = require('gulp-sass'),
-  watch = require('gulp-watch');
- 
-gulp.task('webserver', function() {
-  connect.server({
-    root: 'app',
-    livereload: true
+const gulp = require('gulp');
+const gls = require('gulp-live-server');
+const sass = require('gulp-sass');
+
+gulp.task('serve', ['sass'], function () {
+  const server = gls.new('./app.js');
+  server.start();
+  gulp.watch(
+    [
+      "./app/**/*.html",
+      "./app/**/*.css",
+      "./app/**/*.js"
+    ],
+    function (file) {
+      console.log("Changed: " + file.path);
+      server.notify(file);
+    });
+
+    gulp.watch("./app.js", function (file) {
+    server.start();
+    server.notify(file);
   });
+  gulp.watch("./app/sass/**/*.scss", ['sass']);
 });
 
 gulp.task('sass', function() {
   gulp.src('app/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('app/styles'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest('app/styles'));
 });
 
-gulp.task('reload', function(){
-  gulp.src('app/*.html').pipe(connect.reload());
-})
-
-gulp.task('watch', function() {
-    gulp.watch(['sass/**/*.scss'], {cwd: 'app'}, ['sass']);
-    gulp.watch(['*.html', 'scripts/**/*.js'], {cwd: 'app'}, ['reload']);
-});
- 
-gulp.task('default', ['sass', 'webserver', 'watch']);
+gulp.task('default', ['sass', 'serve']);

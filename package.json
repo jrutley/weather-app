@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "Display the current weather at your location",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.14.0"
+  },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-connect": "^5.0.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-watch": "^4.3.11"
+    "gulp-live-server": "0.0.30",
+    "gulp-sass": "^3.1.0"
   },
   "scripts": {
     "test": "mocha"
