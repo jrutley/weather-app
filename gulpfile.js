@@ -7,16 +7,16 @@ gulp.task('serve', ['sass'], function () {
   server.start();
   gulp.watch(
     [
-      "./app/**/*.html",
-      "./app/**/*.css",
-      "./app/**/*.js"
+      "./client/**/*.html",
+      "./client/**/*.css",
+      "./client/**/*.js"
     ],
     function (file) {
       console.log("Changed: " + file.path);
       server.notify(file);
     });
 
-    gulp.watch("./server/**/.js", file =>{
+    gulp.watch("./server/**/*.js", file =>{
       console.log("Restart server file");
       server.start();
       server.notify(file);      
@@ -26,13 +26,13 @@ gulp.task('serve', ['sass'], function () {
       server.start();
       server.notify(file);
     });
-    gulp.watch("./app/sass/**/*.scss", ['sass']);
+    gulp.watch("./client/sass/**/*.scss", ['sass']);
 });
 
 gulp.task('sass', function() {
-  gulp.src('app/sass/**/*.scss')
+  gulp.src('./client/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('app/styles'));
+    .pipe(gulp.dest('client/styles'));
 });
 
 gulp.task('default', ['sass', 'serve']);
