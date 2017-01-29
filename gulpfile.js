@@ -16,11 +16,17 @@ gulp.task('serve', ['sass'], function () {
       server.notify(file);
     });
 
+    gulp.watch("./server/**/.js", file =>{
+      console.log("Restart server file");
+      server.start();
+      server.notify(file);      
+    });
     gulp.watch("./app.js", function (file) {
-    server.start();
-    server.notify(file);
-  });
-  gulp.watch("./app/sass/**/*.scss", ['sass']);
+      console.log("Restart app");
+      server.start();
+      server.notify(file);
+    });
+    gulp.watch("./app/sass/**/*.scss", ['sass']);
 });
 
 gulp.task('sass', function() {
