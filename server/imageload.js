@@ -5,18 +5,19 @@ const requireEnv = require('require-environment-variables');
 requireEnv(['IMAGESEARCH_KEY']);
 
 function getImage(searchParam, imageResponse) {
-    console.log("Requesting image for parameters:");
-    console.log(searchParam);
+
     request.get(
-        'https://www.googleapis.com/customsearch/v1?key=' + process.env.IMAGESEARCH_KEY + '&cx=' + process.env.CSE_KEY + '&q='+searchParam.type,
+        'https://www.googleapis.com/customsearch/v1?key='+process.env.IMAGESEARCH_KEY+'&cx='+process.env.CSE_KEY+'&q='+searchParam.type+'&searchType=image&imgSize=large&alt=json', //&fileType=jpg
         // { json: { headers: {
         //     'Content-Type': 'application/json'
         // } } },
         function (error, response, body) {
             console.log("GET IMAGE RESPONSE");
             if (!error && response.statusCode == 200) {
-                console.log(body);
-                imageResponse(body);
+                var newResponse = JSON.parse(body);
+                console.log(newResponse.items[0].link);
+
+                imageResponse({url: newResponse.items[0].link});
                 return;
             }
             console.log("Failed with response code "+ response.statusCode);

@@ -5,7 +5,7 @@ function updateWeather(latitude, longitude){
     $.getJSON( "/weather?lat="+latitude+"&long="+longitude, resp => {
         console.log("Weather response:");
         console.log(resp);
-        var mainWeatherResult = resp.weather[0].main;
+        var mainWeatherResult = resp.weather[0].description;
         getBackgroundImage(mainWeatherResult);
         weather.html(mainWeatherResult);
     })
@@ -25,16 +25,17 @@ function getBackgroundImage(weatherType){
         updateBackground(imgUrl);
     })
     .fail(function() {
-        console.log("Failed to update weather");
+        console.log("Failed to update background image");
     })
     .always(function() {
-        console.log( "Finished weather update" );
+        console.log( "Finished background image update" );
     });    
 
 }
 
 function updateBackground(imageUrl){
-    $('body').css('background-image', 'url(' + imageUrl + ')');
+    $('body').css('background-image', 'url(' + imageUrl.url + ')');
+    $('body').css('background-size', 'cover');
 }
 
 function useGoogleLocationApi(){
