@@ -1,4 +1,4 @@
-const request = require('request');
+const request = require('request-promise');
 const http = require('http');
 const dotenv = require('dotenv').config();
 const requireEnv = require('require-environment-variables');
@@ -9,16 +9,14 @@ function getGeo(googleMapResponse) {
         'https://www.googleapis.com/geolocation/v1/geolocate?key=' + process.env.GEOIP_KEY,
         { json: { headers: {
             'Content-Type': 'application/json'
-        } } },
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                googleMapResponse(body);
-                return;
-            }
+    } } }).then(body => {
+        googleMapResponse(body);
+    }).catch((error, response)=>{
+        if(response && response.statusCode){
             console.log("Google Geolocation API returned error " + response.statusCode);
-            console.log(error);
         }
-    );
+        console.log(error);
+    });
 }
 
 module.exports = {
