@@ -8,8 +8,9 @@ function getWeather(position, weatherResponse) {
     request.get("http://api.openweathermap.org/data/2.5/weather?appid="+process.env.WEATHER_KEY+"&lat="+position.lat+"&lon="+position.long)
         .then(body => {
                 console.log("WEATHER RESPONSE:")
-                console.log(body)
-                weatherResponse(JSON.parse(body));
+                var weather = JSON.parse(body);
+                console.log(weather);
+                weatherResponse(weather);
         }); // TODO: Handle Error case
 }
 

@@ -3,9 +3,29 @@
     <link rel="stylesheet" href="styles/main.css">
     <title>My Weather</title>
   </head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+    }
+    #outerContainer {
+      height: 100vh;
+      border: 1px solid black;
+    }
+  </style>
   <body>
-    <div id="blurb">Position</div>
-    <div id="weather">Weather</div>
+    <!-- 
+      Retrieve the current weather from the API.
+      Retrieve an image from Google API as a result of the weather result
+      Set the background of the body to that picture
+      Use Flexbox and/or Bootstrap to put a large centered text in the middle displaying the weather, or an error if it can't be found
+    -->
+    <div id="outerContainer">
+      <div>Current weather for </div>
+      <div id="city"></div>
+      <div id="weather">Weather</div>
+      <div></div>
+    </div>
     <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="

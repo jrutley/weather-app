@@ -1,4 +1,4 @@
-var blurb = $("#blurb");
+var city = $("#city");
 var weather = $("#weather");
 
 function updateWeather(latitude, longitude){
@@ -8,6 +8,7 @@ function updateWeather(latitude, longitude){
         var mainWeatherResult = resp.weather[0].description;
         getBackgroundImage(mainWeatherResult);
         weather.html(mainWeatherResult);
+        city.html(resp.name);
     })
     .fail(function() {
         console.log("Failed to update weather");
@@ -41,7 +42,6 @@ function updateBackground(imageUrl){
 function useGoogleLocationApi(){
     $.getJSON( "/geo", resp => {
         var location = resp.location;
-        blurb.html("Your position is lat " + location.lat + " lng " + location.lng);
         updateWeather(location.lat, location.lng);
     })
     .fail(function() {
@@ -55,7 +55,6 @@ function useGoogleLocationApi(){
 function processGeolocation(){
     navigator.geolocation.getCurrentPosition(function(position) {
         var coords = position.coords;
-        blurb.html("Your position is " + coords.latitude + " " + coords.longitude);
         updateWeather(coords.latitude, coords.longitude);
     }, function(error){
         useGoogleLocationApi();
