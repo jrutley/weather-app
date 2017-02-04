@@ -11,7 +11,9 @@ function getWeather(position, weatherResponse) {
                 var weather = JSON.parse(body);
                 console.log(weather);
                 weatherResponse(weather);
-        }); // TODO: Handle Error case
+        }).catch(err=>{
+            console.log(err); // TODO: Handle Error case
+        });
 }
 
 module.exports = {

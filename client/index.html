@@ -10,15 +10,21 @@
     }
     #outerContainer {
       height: 100vh;
+      max-width: 60%;
       border: 1px solid black;
+    }
+    #outerContainer > div {
+      margin-top: 30px;
     }
   </style>
   <body>
     <div id="outerContainer">
-      <div>Current weather for </div>
-      <div id="city"></div>
-      <div id="weather">Weather</div>
-      <div></div>
+      <div>
+        <div>Current weather for
+        <span id="city"></span></div>
+        <div id="weather">Weather</div>
+        <div></div>
+      </div>
     </div>
     <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"

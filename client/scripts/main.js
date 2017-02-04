@@ -5,7 +5,13 @@ function updateWeather(latitude, longitude){
     $.getJSON( "/weather?lat="+latitude+"&long="+longitude, resp => {
         console.log("Weather response:");
         console.log(resp);
+        var currentUnixTime = Date.now() / 1000;
+        var night = " night";
         var mainWeatherResult = resp.weather[0].description;
+
+        if(currentUnixTime < resp.sys.sunrise || currentUnixTime > resp.sys.sunset){
+            mainWeatherResult += night;
+        }
         getBackgroundImage(mainWeatherResult);
         weather.html(mainWeatherResult);
         city.html(resp.name);
@@ -44,7 +50,8 @@ function useGoogleLocationApi(){
         var location = resp.location;
         updateWeather(location.lat, location.lng);
     })
-    .fail(function() {
+    .catch(function() {
+        console.log("Failed to get Google Geolocation");
         processGeolocation();
     })
     .always(function() {
