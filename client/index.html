@@ -1,29 +1,19 @@
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
     <title>My Weather</title>
   </head>
   <style>
-    body {
-      display: flex;
-      justify-content: center;
-    }
-    #outerContainer {
-      height: 100vh;
-      max-width: 60%;
-      border: 1px solid black;
-    }
-    #outerContainer > div {
-      margin-top: 30px;
-    }
+
   </style>
   <body>
     <div id="outerContainer">
       <div>
         <div>Current weather for
         <span id="city"></span></div>
+        <div><span id="temperature"></span><button id="unitBtn" class="myButton">in F</button></div>
         <div id="weather">Weather</div>
-        <div></div>
       </div>
     </div>
     <script

@@ -12,6 +12,7 @@ function getGeo(googleMapResponse) {
     } } }).then(body => {
         googleMapResponse(body);
     }).catch((error, response)=>{
+        console.log("GEOLOCATION ERROR");
         if(response && response.statusCode){
             console.log("Google Geolocation API returned error " + response.statusCode);
         }
