@@ -10,12 +10,12 @@
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "require-environment-variables": "^1.1.2",
-    "winston": "^2.3.1"
-  },
-  "devDependencies": {
+    "winston": "^2.3.1",
     "gulp": "^3.9.1",
     "gulp-live-server": "0.0.30",
     "gulp-sass": "^3.1.0"
+  },
+  "devDependencies": {
   },
   "scripts": {
     "test": "mocha"
