@@ -1,14 +1,10 @@
 const gulp = require('gulp');
 const gls = require('gulp-live-server');
 const sass = require('gulp-sass');
-const connect = require('connect');
 
 gulp.task('serveprod', ['sass'], function() {
-  connect.server({
-    root: '.',
-    port: process.env.PORT || 80,
-    livereload: false
-  });
+  const server = gls.new('./app.js');
+  server.start();
 });
 
 gulp.task('serve', ['sass'], function () {
