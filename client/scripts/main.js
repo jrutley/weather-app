@@ -1,6 +1,7 @@
 var city = $("#city");
 var weather = $("#weather");
 var temperature = $("#temperature");
+var country = $("#country");
 var isCelsius = true;
 var kelvin = undefined;
 
@@ -28,11 +29,11 @@ function updateWeather(latitude, longitude){
         var mainWeatherResult = resp.weather[0].description;
 
         getBackgroundImage(isNightTime(resp.sys.sunrise, resp.sys.sunset, currentUnixTime), mainWeatherResult); 
-        weather.html(mainWeatherResult);
+        weather.html(resp.weather[0].main);
         city.html(resp.name);
+        country.html(resp.sys.country);
         kelvin = resp.main.temp;
         setTemperature();
-        $("#unitBtn").css({visibility: "visible"});
     })
     .fail(function() {
         console.log("Failed to update weather");
@@ -47,11 +48,10 @@ function getTemperature(unitInKelvin, isCelsius){
     return isCelsius ? unitInC : unitInC * 9 / 5 + 32
 }
 
-function getBackgroundImage(isNight, weatherType){
-    var weather = weatherType + isNight ? " night" : "";
+function getBackgroundImage(isNight, weatherType) {
+    var weather = weatherType + (isNight ? " night" : "");
+
     $.getJSON( "/images?type=" + weather, resp => {
-        console.log("Image response:");
-        console.log(resp);
         var imgUrl = resp;
         updateBackground(imgUrl);
     })
@@ -66,6 +66,7 @@ function getBackgroundImage(isNight, weatherType){
 function updateBackground(imageUrl){
     $('body').css('background-image', 'url(' + imageUrl.url + ')');
     $('body').css('background-size', 'cover');
+    $("#unitBtn").css({visibility: "visible"});
 }
 
 function useGoogleLocationApi(){
