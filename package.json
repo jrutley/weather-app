@@ -4,6 +4,7 @@
   "description": "Display the current weather at your location",
   "main": "index.js",
   "dependencies": {
+    "connect": "^3.5.0",
     "dotenv": "^4.0.0",
     "express": "^4.14.0",
     "http": "0.0.0",
