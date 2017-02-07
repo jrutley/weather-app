@@ -8,11 +8,6 @@ const imageSearch = require('./server/imageload.js');
 
 var app = express();
 
-app.route("/geo").get((req,res)=>{
-    const result = geo.getGeo(geoResp=>{
-        res.send({location: geoResp.location});
-    })
-});
 app.route("/images").get((req,res)=>{
     querystringHelper(req, res, imageSearch.getImage);
 });

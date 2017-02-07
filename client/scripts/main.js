@@ -15,6 +15,8 @@ function setTemperature(){
     var buttonUnits = isCelsius ? "to F" : "to C";
     $("#unitBtn").html(buttonUnits);
     temperature.html(getTemperature(kelvin, isCelsius) + displayUnits);
+    $("#weatherDisplay").css("display", "block");
+    $("#loading").css("display", "none");
 }
 
 function isNightTime(sunrise, sunset, currentUnixTime){
@@ -76,20 +78,46 @@ function useGoogleLocationApi(){
     })
     .catch(function() {
         console.log("Failed to get Google Geolocation");
-        processGeolocation();
     })
     .always(function() {
         console.log( "Google API call complete" );
     });    
 }
 
-function processGeolocation(){
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var coords = position.coords;
-        updateWeather(coords.latitude, coords.longitude);
-    }, function(error){
-        useGoogleLocationApi();
+function ipFallback(locationResult){
+    var location = {latitude: 0, longitude: 0};
+    $.getJSON("http://ipinfo.io/json", resp => {
+        var result = resp.loc.split(",");
+        console.log(result);
+        location.latitude = result[0]
+        location.longitude = result[1];
+    })
+    .catch(err=>{
+        console.log(err);
+        console.log("Failed to get location from IP address");
+    })
+    .always(()=>{
+
+        locationResult(location);
     });
 }
 
-useGoogleLocationApi();
+function processGeolocation(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(position => {
+            coords = position.coords;
+            updateWeather(coords.latitude, coords.longitude);
+        }, error => {
+            console.log("Error getting location. Falling back to IP address");
+            ipFallback(coords=>{
+                updateWeather(coords.latitude, coords.longitude);
+            });
+        });
+    } else {
+        ipFallback(coords=>{
+            updateWeather(coords.latitude, coords.longitude);
+        });
+    }
+}
+
+processGeolocation();
