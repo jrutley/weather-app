@@ -2,7 +2,6 @@ var express = require('express');
 var querystring = require('querystring');
 const dotenv = require('dotenv').config();
 
-const geo = require('./server/geolocation.js');
 const weather = require('./server/weather.js');
 const imageSearch = require('./server/imageload.js');
 
