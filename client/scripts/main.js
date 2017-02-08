@@ -54,11 +54,8 @@ function getBackgroundImage(isNight, weatherType) {
     var weather = weatherType + (isNight ? " night" : "");
 
     $.getJSON( "/images?type=" + weather, resp => {
-        // console.log(resp.urls);
         var imgUrls = resp.urls;
         imgUrls.forEach(imgUrl=>{
-            // console.log(imgUrl)
-
 
             fetch(imgUrl, {mode: 'cors'})  
             .then(  
@@ -80,13 +77,6 @@ function getBackgroundImage(isNight, weatherType) {
             .catch(function(err) {  
                 console.log('Fetch Error :-S', err);  
             });
-
-            // $.get(imgUrl).done((data, status)=>{
-            //     if(status === 200){
-            //         updateBackground(imgUrl);
-            //         $("#unitBtn").css({visibility: "visible"});
-            //     }
-            // });
         })
     })
     .fail(function() {
