@@ -12,9 +12,13 @@ function getImage(searchParam, imageResponse) {
         .then(body=>{
             var newResponse = JSON.parse(body);
             winston.debug("GET IMAGE RESPONSE");
-            winston.debug(newResponse.items[0].link);
 
-            imageResponse({url: newResponse.items[0].link});
+            newResponse.items.forEach(item=>{
+                winston.debug(item.link);
+            })
+            // winston.debug(newResponse.items[0].link);
+
+            imageResponse({urls: newResponse.items.map(i=>i.link)});
         }).catch((err, response)=>{
             winston.error("GET IMAGE RESPONSE Failed");
             var responseCode = response && response.statusCode ? response.statusCode : "NONE";

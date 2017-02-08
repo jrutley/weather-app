@@ -54,8 +54,40 @@ function getBackgroundImage(isNight, weatherType) {
     var weather = weatherType + (isNight ? " night" : "");
 
     $.getJSON( "/images?type=" + weather, resp => {
-        var imgUrl = resp;
-        updateBackground(imgUrl);
+        // console.log(resp.urls);
+        var imgUrls = resp.urls;
+        imgUrls.forEach(imgUrl=>{
+            // console.log(imgUrl)
+
+
+            fetch(imgUrl, {mode: 'cors'})  
+            .then(  
+                function(response) { 
+                    console.log("RESPONSE:");
+                    console.log(response); 
+                if (response.status !== 200) {  
+                    console.log('Looks like there was a problem. Status Code: ' +  
+                    response.status);  
+                    return;  
+                }
+
+                updateBackground(imgUrl);
+                $("#unitBtn").css({visibility: "visible"});
+
+                console.log(response);
+                }  
+            )  
+            .catch(function(err) {  
+                console.log('Fetch Error :-S', err);  
+            });
+
+            // $.get(imgUrl).done((data, status)=>{
+            //     if(status === 200){
+            //         updateBackground(imgUrl);
+            //         $("#unitBtn").css({visibility: "visible"});
+            //     }
+            // });
+        })
     })
     .fail(function() {
         console.log("Failed to update background image");
@@ -66,9 +98,8 @@ function getBackgroundImage(isNight, weatherType) {
 }
 
 function updateBackground(imageUrl){
-    $('body').css('background-image', 'url(' + imageUrl.url + ')');
+    $('body').css('background-image', 'url(' + imageUrl + ')');
     $('body').css('background-size', 'cover');
-    $("#unitBtn").css({visibility: "visible"});
 }
 
 function useGoogleLocationApi(){
