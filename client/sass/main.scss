@@ -60,3 +60,11 @@ body {
     //background: black;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
+
+img .loading {
+  width: 600px;
+  height: 450px;
+  background: url(loading.gif) 50% no-repeat;
+  border: 1px solid black;
+  border-radius: 5px;
+}

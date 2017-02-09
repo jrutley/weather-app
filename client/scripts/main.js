@@ -54,30 +54,7 @@ function getBackgroundImage(isNight, weatherType) {
     var weather = weatherType + (isNight ? " night" : "");
 
     $.getJSON( "/images?type=" + weather, resp => {
-        var imgUrls = resp.urls;
-        imgUrls.forEach(imgUrl=>{
-
-            fetch(imgUrl, {mode: 'cors'})  
-            .then(  
-                function(response) { 
-                    console.log("RESPONSE:");
-                    console.log(response); 
-                if (response.status !== 200) {  
-                    console.log('Looks like there was a problem. Status Code: ' +  
-                    response.status);  
-                    return;  
-                }
-
-                updateBackground(imgUrl);
-                $("#unitBtn").css({visibility: "visible"});
-
-                console.log(response);
-                }  
-            )  
-            .catch(function(err) {  
-                console.log('Fetch Error :-S', err);  
-            });
-        })
+        updateBackground(resp.image);
     })
     .fail(function() {
         console.log("Failed to update background image");
